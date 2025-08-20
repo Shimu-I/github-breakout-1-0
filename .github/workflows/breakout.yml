@@ -2,7 +2,6 @@ name: generate breakout svg
 
 on:
   schedule:
-    # Runs once a day at 18:05 UTC (00:05 Asia/Dhaka)
     - cron: "5 18 * * *"
   workflow_dispatch:
 
@@ -28,13 +27,8 @@ jobs:
           mv output/light.svg images/breakout-light.svg
           mv output/dark.svg images/breakout-dark.svg
 
-      - name: Configure git
+      - name: Replace ball with emoji
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Commit and push SVGs
-        run: |
-          git add images/breakout-light.svg images/breakout-dark.svg
-          git commit -m "chore: update breakout SVGs" || echo "No changes to commit"
-          git push
+          # Placeholder: Replace <circle> with <text> containing 😊
+          sed -i 's/<circle cx="50" cy="50" r="10" fill="white"/<text x="45" y="50" font-size="20">😊<\/text>/g' images/breakout-light.svg || true
+          sed -i 's/<circle cx="50" cy="50" r="10" fill="white"/<text x="45" y="50" font-size="20">😊<\/text>/g' images/breakout-dark.svg || true
