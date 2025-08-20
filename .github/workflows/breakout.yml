@@ -19,7 +19,7 @@ jobs:
       - name: Generate SVG
         uses: cyprieng/github-breakout@v1.0.0
         with:
-          github_username: ${{ github.repository_owner }}
+          github_username: shimu-i
 
       - name: Move generated SVGs
         run: |
@@ -29,6 +29,16 @@ jobs:
 
       - name: Replace ball with emoji
         run: |
-          # Placeholder: Replace <circle> with <text> containing 😊
           sed -i 's/<circle cx="50" cy="50" r="10" fill="white"/<text x="45" y="50" font-size="20">😊<\/text>/g' images/breakout-light.svg || true
           sed -i 's/<circle cx="50" cy="50" r="10" fill="white"/<text x="45" y="50" font-size="20">😊<\/text>/g' images/breakout-dark.svg || true
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push SVGs
+        run: |
+          git add images/breakout-light.svg images/breakout-dark.svg
+          git commit -m "chore: update breakout SVGs" || echo "No changes to commit"
+          git push
