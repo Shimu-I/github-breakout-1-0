@@ -1,9 +1,8 @@
-
 name: generate breakout svg
 
 on:
   schedule:
-    # Runs once a day at 18:05 UTC (which is 00:05 Asia/Dhaka)
+    # Runs once a day at 18:05 UTC (00:05 Asia/Dhaka)
     - cron: "5 18 * * *"
   workflow_dispatch:
 
@@ -19,10 +18,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Generate SVG
-        # Pin to the commit behind v1.0.0 for extra security
         uses: cyprieng/github-breakout@90be7fe1a3a6c2b2b5a0b2b5e6a0f0d6f6c0a0f
         with:
-          # Uses the repo owner by default; replace with your username to be explicit:
           github_username: ${{ github.repository_owner }}
 
       - name: Move generated SVGs
